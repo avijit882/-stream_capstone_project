@@ -1,0 +1,12 @@
+// src/components/ProtectedRoute.jsx
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+export default function ProtectedRoute({ children }) {
+  const isAuthenticated = useSelector(s => s.auth.isAuthenticated);
+  const activeProfile   = useSelector(s => s.auth.activeProfile);
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (!activeProfile)   return <Navigate to="/profiles" replace />;
+  return children;
+}
